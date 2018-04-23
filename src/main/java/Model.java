@@ -35,36 +35,42 @@ public class Model implements Subject{
 		this.students.add(student);
 	}
 	
-	// Adiciona evento
-	public void addEvento(Update e){
-//		this.eventos.add(e);
-		this.notifyObservers(e.message().chat().id(), "TO METODO AQUI NO ADDEVENTO ");
+	public void remove(Update update) {
+		
+		for(Eventos evento: eventos){
+			if(evento.getnomeEvento().equals(update.message().text())){
+				eventos.remove(evento);
+			}
+		}
 	}
-	// 
+	
+	// Adiciona evento
+	public void addEvento(Eventos e){
+		this.eventos.add(e);
+	}
+	 
 
 	public void searchEventos(Update update){
 		
-		this.notifyObservers(update.message().chat().id(), "TO AQUI NO SEARCHEVENTOS");
+		String NomeEvento = null;
 		
-//		String NomeEvento = null;
-//		
-//		if("todos".equals(update.message().text())) {
-//			for(Eventos el: eventos){
-//				NomeEvento = el.getnomeEvento().toString();
-//			}
-//		}else {
-//			for(Eventos evento: eventos){
-//				if(evento.getnomeEvento().equals(update.message().text())){
-//					NomeEvento = evento.getnomeEvento().toString();
-//				}
-//			}
-//		}
-//		
-//		if(NomeEvento != null){
-//			this.notifyObservers(update.message().chat().id(), NomeEvento);
-//		} else {
-//			this.notifyObservers(update.message().chat().id(), "Nao ha eventos");
-//		}
+		if("todos".equals(update.message().text())) {
+			for(Eventos el: eventos){
+				NomeEvento = el.getnomeEvento().toString();
+			}
+		}else {
+			for(Eventos evento: eventos){
+				if(evento.getnomeEvento().equals(update.message().text())){
+					NomeEvento = evento.getnomeEvento().toString();
+				}
+			}
+		}
+		
+		if(NomeEvento != null){
+			this.notifyObservers(update.message().chat().id(), NomeEvento);
+		} else {
+			this.notifyObservers(update.message().chat().id(), "Nao ha eventos");
+		}
 		
 	}
 

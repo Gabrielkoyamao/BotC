@@ -15,8 +15,7 @@ public class Main {
 	}
 	
 	public static void initializeModel(Model model){
-		model.addStudent(new Student("joao", "111"));
-		model.addStudent(new Student("thomas", "222"));
+		
 	}
 
 }

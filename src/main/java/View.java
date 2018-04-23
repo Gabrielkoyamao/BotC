@@ -28,6 +28,7 @@ public class View implements Observer{
 	
 	ControllerSearch controllerSearch; //Strategy Pattern -- connection View -> Controller
 	ControllerSearchEventos controllerSearchEventos;
+	ControllerRemoveEventos controllerRemoveEventos;
 	ControllerAdd controllerAdd;
 
 	boolean searchBehaviour = false;
@@ -44,6 +45,10 @@ public class View implements Observer{
 	
 	public void setControllerSearchEventos(ControllerSearchEventos controllerSearchEventos){
 		this.controllerSearchEventos = controllerSearchEventos;
+	}
+	
+	public void setControllerRemoveEventos(ControllerRemoveEventos controllerRemoveEventos){
+		this.controllerRemoveEventos = controllerRemoveEventos;
 	}
 
 	public void setControllerAdd(ControllerAdd controllerAdd){ //Strategy Pattern
@@ -70,11 +75,6 @@ public class View implements Observer{
 				if(this.searchBehaviour==true){
 					this.callController(update);
 					
-				}else if(update.message().text().equals("student")){
-					setControllerSearch(new ControllerSearchSudent(model, this));
-					sendResponse = bot.execute(new SendMessage(update.message().chat().id(),"what's the student name?"));
-					this.searchBehaviour = true;
-					
 				}
 				
 				else if(update.message().text().equals("add")){
@@ -89,7 +89,13 @@ public class View implements Observer{
 					sendResponse = bot.execute(new SendMessage(update.message().chat().id(),"digite o nome do evento ou todos"));
 					this.searchBehaviour = true;
 					
-				}else {
+				}
+				else if(update.message().text().equals("remove")) {
+					setControllerRemoveEventos(new ControllerRemoveEventos(model, this));
+					sendResponse = bot.execute(new SendMessage(update.message().chat().id(),"digite o nome do evento ou todos"));
+					this.searchBehaviour = true;
+				}
+				else {
 					sendResponse = bot.execute(new SendMessage(update.message().chat().id(),"digita ADD para adicionar um evento ou SEARCH"));
 				}
 				
